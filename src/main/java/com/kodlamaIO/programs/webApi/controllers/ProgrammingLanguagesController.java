@@ -17,14 +17,14 @@ import com.kodlamaIO.programs.business.requests.programmingLanguage.UpdateProgra
 import com.kodlamaIO.programs.business.responses.programmingLanguage.GetAllProgrammingLanguagesResponse;
 
 @RestController
-@RequestMapping("/api/programmingLanguage")
-public class ProgrammingLanguageController {
+@RequestMapping("/api/programmingLanguages")
+public class ProgrammingLanguagesController {
     //Constructor için servis oluşturulması
     private ProgrammingLanguageService programmingLanguageService;
 
     //Constructor olarak servisi eşleştirme:
     @Autowired
-    public ProgrammingLanguageController(ProgrammingLanguageService programmingLanguageService) {
+    public ProgrammingLanguagesController(ProgrammingLanguageService programmingLanguageService) {
         this.programmingLanguageService = programmingLanguageService;
     }
 

@@ -10,15 +10,19 @@ import org.springframework.stereotype.Service;
 
 import com.kodlamaIO.programs.business.abstracts.TechnologyServices;
 import com.kodlamaIO.programs.business.responses.Technology.GetAllTechnologiesResponse;
+import com.kodlamaIO.programs.dataAccess.abstracts.ProgrammingLanguageRepository;
 import com.kodlamaIO.programs.dataAccess.abstracts.TechnologyRepository;
+import com.kodlamaIO.programs.entities.concretes.ProgrammingLanguage;
 import com.kodlamaIO.programs.entities.concretes.Technology;
 
 @Service
 public class TechnologyService implements TechnologyServices{
     private TechnologyRepository technologyRepository;
+    private ProgrammingLanguageRepository programmingLanguageRepository;
 
-    public TechnologyService(TechnologyRepository technologyRepository) {
+    public TechnologyService(TechnologyRepository technologyRepository, ProgrammingLanguageRepository programmingLanguageRepository) {
         this.technologyRepository = technologyRepository;
+        this.programmingLanguageRepository = programmingLanguageRepository;
     }
 
     @Override
@@ -37,17 +41,27 @@ public class TechnologyService implements TechnologyServices{
     @Override
     public void add(CreateTechnologyRequest createTechnologyRequest) {
         Technology technology=new Technology();
-        technology.getProgrammingLanguage(createTechnologyRequest.getProgrammingLanguageId());
+        ProgrammingLanguage programmingLanguage= programmingLanguageRepository.findById(createTechnologyRequest.getProgrammingLanguageId()).get();
+        
         technology.setName(createTechnologyRequest.getName());
+        technology.setProgrammingLanguage(programmingLanguage);
+
+        technologyRepository.save(technology);
     }
 
     @Override
     public void delete(DeleteTechnologyRequest deleteTechnologyRequest) {
-
+        technologyRepository.deleteById(deleteTechnologyRequest.getId());
     }
 
     @Override
-    public void update(UpdateTechnologyRequest updateTechnologyRequest) {
+    public void update(int id, UpdateTechnologyRequest updateTechnologyRequest) {
+        Technology technology=technologyRepository.findById(id).get();
+        ProgrammingLanguage programmingLanguage=programmingLanguageRepository.findById(updateTechnologyRequest.getId()).get();
 
+        technology.setName(updateTechnologyRequest.getName());
+        technology.setProgrammingLanguage(programmingLanguage);
+
+        technologyRepository.save(technology);
     }
 }

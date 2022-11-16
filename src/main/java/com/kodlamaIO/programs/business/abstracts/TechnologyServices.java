@@ -11,5 +11,5 @@ public interface TechnologyServices {
     List<GetAllTechnologiesResponse> getAll();
     void add(CreateTechnologyRequest createTechnologyRequest);
     void delete(DeleteTechnologyRequest deleteTechnologyRequest);
-    void update(UpdateTechnologyRequest updateTechnologyRequest);
+    void update(int id, UpdateTechnologyRequest updateTechnologyRequest);
 }
